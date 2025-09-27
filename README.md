@@ -26,3 +26,11 @@ The frontend will automatically sync with Todoist and maintain a hosted SQL data
 2. Prototype the contribution-style calendar component and data aggregation layer.
 3. Design agent workflows and prompt templates for planning, scheduling, and search actions.
 4. Integrate the conversational UI with the Responses API and underlying agents, ensuring task updates propagate everywhere.
+
+
+## Implementation Overview
+
+* The backend schema and synchronization pipeline live in `backend/schema.py` and `backend/sync.py`, providing SQLAlchemy models and sync helpers.
+* Contribution calendar data aggregation is handled by `backend/analytics.py` and exposed to the UI via `backend/api.py`.
+* Agent workflows and prompt templates are defined in `agents/workflows.py`, which the chat endpoint uses to plan multi-step responses.
+* Prototype React components for the calendar and chat integration reside in `frontend/src/components` with shared utilities in `frontend/src/utils`.
