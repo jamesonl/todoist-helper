@@ -72,7 +72,6 @@ The frontend will automatically sync with Todoist and maintain a hosted SQL data
    ```
 4. Visit the frontend (typically http://127.0.0.1:5173) while the backend remains running so API calls succeed.
 
-
 ## Implementation Overview
 
 * The backend schema and synchronization pipeline live in `backend/schema.py` and `backend/sync.py`, providing SQLAlchemy models and sync helpers.
