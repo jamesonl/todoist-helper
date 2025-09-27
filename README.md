@@ -26,3 +26,56 @@ The frontend will automatically sync with Todoist and maintain a hosted SQL data
 2. Prototype the contribution-style calendar component and data aggregation layer.
 3. Design agent workflows and prompt templates for planning, scheduling, and search actions.
 4. Integrate the conversational UI with the Responses API and underlying agents, ensuring task updates propagate everywhere.
+
+
+## Quickstart
+
+### Backend API
+
+1. Create and activate a virtual environment:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate
+   ```
+2. Install dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Launch the FastAPI server (defaults to http://127.0.0.1:8000):
+   ```bash
+   uvicorn backend.api:app --reload
+   ```
+4. The interactive docs are available at http://127.0.0.1:8000/docs once the server is running.
+
+### Frontend Prototype
+
+1. Use Node.js 18+ and install project dependencies from the `frontend` directory:
+   ```bash
+   cd frontend
+   npm install
+   ```
+2. Start the development server (Vite or your preferred React toolchain):
+   ```bash
+   npm run dev
+   ```
+3. Ensure the dev server proxies API requests to the FastAPI backend. With Vite, add the following to `vite.config.ts`:
+   ```ts
+   export default defineConfig({
+     server: {
+       proxy: {
+         "/heatmap": "http://127.0.0.1:8000",
+         "/chat": "http://127.0.0.1:8000",
+         "/sync": "http://127.0.0.1:8000",
+       },
+     },
+   });
+   ```
+4. Visit the frontend (typically http://127.0.0.1:5173) while the backend remains running so API calls succeed.
+
+
+## Implementation Overview
+
+* The backend schema and synchronization pipeline live in `backend/schema.py` and `backend/sync.py`, providing SQLAlchemy models and sync helpers.
+* Contribution calendar data aggregation is handled by `backend/analytics.py` and exposed to the UI via `backend/api.py`.
+* Agent workflows and prompt templates are defined in `agents/workflows.py`, which the chat endpoint uses to plan multi-step responses.
+* Prototype React components for the calendar and chat integration reside in `frontend/src/components` with shared utilities in `frontend/src/utils`.
